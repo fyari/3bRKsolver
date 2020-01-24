@@ -17,7 +17,7 @@ create table input (
     param1          double precision ,
     param2          double precision,      	
     param2          double precision,      
-    FOREIGN KEY (job_id) REFERENCES user (task)
+    FOREIGN KEY (task_id) REFERENCES user (task)
   );
 create table result (
      id                        integer primary key  autoincrement,
@@ -26,6 +26,6 @@ create table result (
     result1		            double precision ,
     result1		            double precision ,
   
-    FOREIGN KEY (job_id) REFERENCES user (task)
+    FOREIGN KEY (task_id) REFERENCES user (task)
   
   );
