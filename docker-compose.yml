@@ -1,0 +1,55 @@
+    version: '3'
+     
+    services:
+        db:
+                image: "postgres:9.6.5"
+                container_name:  db_1
+                #volumes:
+                build: ./database
+                #expose:
+                networks:
+                    public_net:
+                        ipv4_address:  192.168.17.3
+
+        master:
+                image: "master_python"
+                container_name:  master_1
+                build: ./master
+                depends_on:  db
+                #expose:
+                networks:
+                    public_net:
+                        ipv4_address:  192.168.17.4
+                        
+        webapp:
+                image: "python_flask"
+                container_name:  webapp_1
+                build: ./webapp
+                depends_on:  db
+                #expose:
+                networks:
+                    public_net:
+                        ipv4_address:  192.168.17.5
+             
+        rksolver1:
+                image: "python_rk"
+                container_name:  rksolver1
+                build: ./3bodysolver
+                depends_on:  master
+                #expose:
+                networks:
+                    public_net:
+                        ipv4_address:  192.168.17.6
+        rksolver1:
+                image: "python_rk"
+                container_name:  rksolver2
+                build: ./3bodysolver
+                depends_on:  master
+                #expose:
+                networks:
+                    public_net:
+                        ipv4_address:  192.168.17.7
+
+
+
+#volumes:
