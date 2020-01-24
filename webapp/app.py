@@ -12,6 +12,8 @@ db = SQLAlchemy(app)
 class tasks(db.Model):
    id = db.Column('task_id', db.Integer, primary_key = True)
    taskname = db.Column(db.String(100))
+   created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+   status = db.Column(ready = '0', not_ready = '1')
 
 class inputs(db.Model):
    id = db.Column('input_id', db.Integer, primary_key = True)
