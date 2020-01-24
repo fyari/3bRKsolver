@@ -6,7 +6,7 @@ services:
         container_name:  db_1
         volumes: pgdata:/var/lib/postgresql/data
         build: ./database
-        #expose:
+        expose: 5432
         networks:
             #public_net:
                 ipv4_address:  192.168.17.3
