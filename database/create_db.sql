@@ -4,28 +4,27 @@ DROP TABLE IF EXISTS input;
 DROP TABLE IF EXISTS result;
 
 create table task (
-     id                 integer primary key  autoincrement,
+     id                 serial primary key ,
     taskname 	 varchar(50) unique not null, 
     created	    timestamp not null DEFAULT CURRENT_TIMESTAMP,
-    status           varchar(50) not null,  // result_ready , result_not_ready
+    status           varchar(50) not null  
   
 );
 
 create table input (
-    id                  integer primary key  autoincrement,
-    task_id 			  integer primary key  autoincrement,
+    id                     serial primary key ,
+    task_id 	       integer not null,
     param1          double precision ,
-    param2          double precision,      	
-    param2          double precision,      
-    FOREIGN KEY (task_id) REFERENCES user (task)
+    
+    FOREIGN KEY (task_id) REFERENCES task (id)
   );
-create table result (
-     id                        integer primary key  autoincrement,
-     task_id 				integer primary key  ,
-    result1		            double precision ,
-    result1		            double precision ,
-    result1		            double precision ,
   
-    FOREIGN KEY (task_id) REFERENCES user (task)
+create table result (
+     id                       serial primary key ,
+     task_id 				integer not null  ,
+     symbol                varchar(50) not null,
+    result		            double precision ,
+  
+    FOREIGN KEY (task_id) REFERENCES task (id)
   
   );
