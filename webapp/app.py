@@ -1,17 +1,58 @@
+from flask import Flask, request, flash, url_for, redirect, render_template
+from flask_sqlalchemy import SQLAlchemy
 import datetime
-import os
 
-from flask import Flask, render_template, redirect, url_for
-from database import db_session
 
 app = Flask(__name__)
-app.secret_key = os.environ['APP_SECRET_KEY']
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.sqlite3'
+app.config['SECRET_KEY'] = "random string"
 
-class HelloWorld(Resource):
-    def get(self):
-        return {'hello': 'world'}
+db = SQLAlchemy(app)
 
-api.add_resource(HelloWorld, '/')
+class tasks(db.Model):
+   id = db.Column('task_id', db.Integer, primary_key = True)
+   taskname = db.Column(db.String(100))
+
+class inputs(db.Model):
+   id = db.Column('input_id', db.Integer, primary_key = True)
+   taskid = db.Column('input_id', db.Integer, primary_key = True)
+   param1 = db.Column(db.Float(20))
+   param2 = db.Column(db.Float(20))
+   param3 = db.Column(db.Float(20))
+   task_id= db.Column(db.Integer, db.ForeignKey('tasks.id'))
+
+class result(db.model):
+   id = db.Column('results', db.Integer, primary_key = True)
+   taskid = db.Column('results', db.Integer, primary_key = True)
+   result1 = db.Column(db.Float(20))
+   result2 = db.Column(db.Float(20))
+   result3 = db.Column(db.Float(20))
+   results = db.Column(db.Float, db.ForeignKey('tasks.id'))
+
+
+@app.route('/')
+def show_all():
+   return render_template('show_all.html', tasks = tasks.query.all() )
+
+@app.route('/new', methods = ['GET', 'POST'])
+def new():
+   if request.method == 'POST':
+      if not request.form['name']:
+         flash('Please enter all the fields', 'error')
+      else:
+         task = tasks(request.form['name'])
+         
+         db.session.add(task)
+         db.session.commit()
+         
+         flash('Task was successfully added')
+         return redirect(url_for('show_all'))
+   return render_template('new.html')
+
+now = datetime.datetime.now()
+print ("Current date and time : ")
+print (now.strftime("%Y-%m-%d %H:%M:%S"))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5090, debug=True)
+   db.create_all()
+   app.run(debug = True)
