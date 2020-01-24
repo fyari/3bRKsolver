@@ -1,19 +1,13 @@
-FROM python:3
+FROM ubuntu:latest
+RUN apt-get update
 
-ENV PYTHONUNBUFFERED 1
-RUN mkdir -p /opt/services/master/src
+RUN apt-get install -y -q build-essential python-pip python-dev python-simplejson git
+RUN pip install --upgrade pip
+RUN pip install --upgrade virtualenv
 
-COPY requirements.txt /opt/services/master/src
-COPY . /opt/services/master/src
-
-WORKDIR /opt/services/master/src
-
-RUN pip install --upgrade pip 
-RUN pip install -r requirements.txt
-
-
-#EXPOSE 5000
-
-CMD [ "python", "/opt/services/master/src" ]
-
-# connect to db , read jobs , initiate 3body containers
+RUN mkdir deployment
+RUN git clone https://github.com/maciejd/restful-api-python-flask.git /deployment/
+RUN virtualenv /deployment/env/
+RUN /deployment/env/bin/pip install flask
+WORKDIR /deployment
+CMD env/bin/python app.py
