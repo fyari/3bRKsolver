@@ -46,11 +46,12 @@ services:
         container_name:  rksolver1
         build: ./3bodysolver
         #depends_on:  {master}
+        ports: ["5005:5000"]
         #expose:
         networks:
             public_net:
                 ipv4_address:  192.168.17.6
-    rksolver1:
+    rksolver2:
         image: "3body/python_rk"
         container_name:  rksolver2
         build: ./3bodysolver
