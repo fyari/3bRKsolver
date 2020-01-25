@@ -13,7 +13,8 @@ services:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
         build: ./database
-        expose: [5432]
+        ports: ["8000:5432"]
+        #expose: [5432]
         networks:
             public_net:
                 ipv4_address:  192.168.17.3
@@ -23,6 +24,7 @@ services:
         container_name:  master_1
         build: ./master
         depends_on:  [db]
+        ports: ["5001:5000"]
         #expose:
         networks:
             public_net:
@@ -33,7 +35,8 @@ services:
         container_name:  webapp_1
         build: ./webapp
         depends_on:  [db]
-        expose: [5090]
+        ports: ["5000:5000"]
+        #expose: [5090]
         networks:
             public_net:
                 ipv4_address:  192.168.17.5
