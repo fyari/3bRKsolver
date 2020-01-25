@@ -11,15 +11,6 @@ WORKDIR /opt/services/master/src
 RUN pip install --upgrade pip 
 RUN pip install -r requirements.txt
 
-
-<<<<<<< HEAD
 EXPOSE 5000
 
 CMD [ "python", "/opt/services/master/src" ]
-=======
-#EXPOSE 5000
-
-CMD [ "python", "/opt/services/master/src" ]
-
-# connect to db , read jobs , initiate 3body containers
->>>>>>> parent of e87c28f... Docker file with rest api (iniitial version) and initial version of app
