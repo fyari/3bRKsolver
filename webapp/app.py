@@ -17,7 +17,7 @@ class tasks(db.Model):
       
 
 class inputs(db.Model):
-   id = db.Column('input_id', db.Integer, primary_key = True)
+   id = db.Column(db.Integer, primary_key = True)
    taskid= db.Column(db.Integer, db.ForeignKey('tasks.id'))
    param1 = db.Column(db.Float(20))
    param2 = db.Column(db.Float(20))
@@ -25,7 +25,7 @@ class inputs(db.Model):
    
 
 class result(db.Model):
-   id = db.Column('results', db.Integer, primary_key = True)
+   id = db.Column(db.Integer, primary_key = True)
    taskid = db.Column(db.Integer ,  db.ForeignKey('tasks.id'))
    result1 = db.Column(db.Float(20))
    result2 = db.Column(db.Float(20))
