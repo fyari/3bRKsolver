@@ -1,6 +1,8 @@
 FROM python:3
 
 ENV PYTHONUNBUFFERED 1
+
+RUN mkdir -p /opt/services/3bodysolver
 RUN mkdir -p /opt/services/3bodysolver/src
 
 COPY requirements.txt /opt/services/3bodysolver/src
@@ -14,6 +16,6 @@ RUN pip install -r requirements.txt
 
 #EXPOSE 5000
 
-CMD [ "python", "/opt/services/3bodysolver/src/3body.py " ]
+CMD [ "python", "/opt/services/3bodysolver/src/3body.py" ]
 
 #3body.py  calculate the result and write it in database table RESULT
