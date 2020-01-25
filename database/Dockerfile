@@ -2,7 +2,9 @@ FROM postgres
 
 RUN mkdir sql
 
-COPY create_db.sql sql/
+COPY . sql/
+
+WORKDIR sql/
 
 EXPOSE 5432
 
