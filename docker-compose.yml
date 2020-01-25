@@ -2,7 +2,7 @@ version: '3'
      
 services:
     db:
-        image: "postgres:latest"
+        image: "3body/postgres:latest"
         restart: always
         container_name:  db_1
         volumes: [/var/lib/postgres/]
@@ -19,7 +19,7 @@ services:
                 ipv4_address:  192.168.17.3
 
     master:
-        image: "master_python"
+        image: "3body/python_master"
         container_name:  master_1
         build: ./master
         depends_on:  [db]
@@ -29,7 +29,7 @@ services:
                 ipv4_address:  192.168.17.4
                     
     webapp:
-        image: "python_flask"
+        image: "3body/python_flask"
         container_name:  webapp_1
         build: ./webapp
         depends_on:  [db]
@@ -39,7 +39,7 @@ services:
                 ipv4_address:  192.168.17.5
          
     rksolver1:
-        image: "python_rk"
+        image: "3body/python_rk"
         container_name:  rksolver1
         build: ./3bodysolver
         #depends_on:  {master}
@@ -48,7 +48,7 @@ services:
             public_net:
                 ipv4_address:  192.168.17.6
     rksolver1:
-        image: "python_rk"
+        image: "3body/python_rk"
         container_name:  rksolver2
         build: ./3bodysolver
        # depends_on:  {master}
