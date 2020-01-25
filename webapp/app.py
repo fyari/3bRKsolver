@@ -10,7 +10,7 @@ app.config['SECRET_KEY'] = "random string"
 db = SQLAlchemy(app)
 
 class tasks(db.Model):
-   id = db.Column('task_id', db.Integer, primary_key = True)
+   id = db.Column( db.Integer, primary_key = True)
    taskname = db.Column(db.String(100))
    created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
    status = db.Column(db.String(50))
@@ -18,19 +18,19 @@ class tasks(db.Model):
 
 class inputs(db.Model):
    id = db.Column('input_id', db.Integer, primary_key = True)
-   taskid = db.Column('input_id', db.Integer, primary_key = True)
+   taskid= db.Column(db.Integer, db.ForeignKey('tasks.id'))
    param1 = db.Column(db.Float(20))
    param2 = db.Column(db.Float(20))
    param3 = db.Column(db.Float(20))
-   input_id= db.Column(db.Integer, db.ForeignKey('tasks.id'))
+   
 
-class result(db.model):
+class result(db.Model):
    id = db.Column('results', db.Integer, primary_key = True)
-   taskid = db.Column('results', db.Integer, primary_key = True)
+   taskid = db.Column(db.Integer ,  db.ForeignKey('tasks.id'))
    result1 = db.Column(db.Float(20))
    result2 = db.Column(db.Float(20))
    result3 = db.Column(db.Float(20))
-   results = db.Column(db.Float, db.ForeignKey('tasks.id'))
+   
 
 
 @app.route('/')
