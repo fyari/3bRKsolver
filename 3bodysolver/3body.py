@@ -25,7 +25,7 @@ def rksolver():
 if __name__ == "__main__":
 
     while(True):
-        task = getTasks()
+        task = getTasks(rk_id)
         # params 
         params = []
         res = rksolver()
