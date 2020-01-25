@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
    <body>
-      <h3>tasks - Flask SQLAlchemy example</h3>
+      <h3>Tasks - Inputs</h3>
       <hr/>
       
       {%- for category, message in get_flashed_messages(with_categories = true) %}
@@ -15,6 +15,12 @@
          <input type = "nummer" name = "id" placeholder = "id" /><br>
          <label for = "name">Name</label><br>
          <input type = "text" name = "name" placeholder = "Name" /><br>
+         <label for = "taskid">taskid</label><br>
+         <input type = "nummer" name = "taskid" placeholder = "taskid" /><br>
+         <label for = "parameter1">param1</label><br>
+         <input type = "nummer" name = "parameter1" placeholder = "parameter1" /><br>
+         <label for = "parameter2">param1</label><br>
+         <input type = "nummer" name = "parameter2" placeholder = "parameter2" /><br>
          <input type = "submit" value = "Submit" />
       </form>
    </body>

@@ -3,7 +3,7 @@
    <head></head>
    <body>
       <h3>
-         <a href = "{{ url_for('show_all') }}">Comments - Flask SQLAlchemy example</a>
+         <a href = "{{ url_for('show_all') }}">Threebody tasks</a>
       </h3>
       
       <hr/>
@@ -11,24 +11,35 @@
          {{ message }}
       {%- endfor %}
 		
-      <h3>tasks (<a href = "{{ url_for('new') }}">Add Tasks </a>)</h3>
+      <h3>Tasks (<a href = "{{ url_for('new') }}">Add Inputs </a>)</h3>
       
       <table>
          <thead>
             <tr>
                <th>id</th>
-               <th>Name</th>
+               <th>taskname</th>
+               <th>taskid</th>
+               <th>param1</th>
+               <th>param2</th>
             </tr>
          </thead>
 
-         <tbody>
+       <tbody>
             {% for task in tasks %}
                <tr>
                   <td>{{ task.id }}</td>
-                  <td>{{ task.name }}</td>
+                  <td>{{ task.taskname }}</td>
                </tr>
             {% endfor %}
-         </tbody>
+            {% for input in inputs %}
+               <tr>
+                  <td>{{ input.id }}</td>
+                  <td>{{ input.taskid }}</td>
+                  <td>{{ input.param1 }}</td>
+                  <td>{{ input.param2}}</td>
+               </tr>
+            {% endfor %}
+        </tbody>
       </table>
    </body>
 </html>
