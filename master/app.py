@@ -9,6 +9,8 @@ rk = []
 
 app = Flask(__name__)
 
+db = [("")]
+
 tasks = [
     {
         'id': 1,
@@ -16,13 +18,13 @@ tasks = [
         'created': u'10102020', 
         'status': 'result_ready'
     },
-{
+    {
         'id': 2,
         'name': u'my task 2',
         'created': u'10102020', 
         'status': 'result_not_ready'
     },
-{
+    {
         'id': 3,
         'name': u'my task 3',
         'created': u'10102020', 
@@ -39,33 +41,33 @@ tasks = [
 # models : tasks , result , inputs
 
 def get_all_tasks():
-    return []
+    return {}
 
 
 def get_not_computed_tasks():
-    return []
+    return {}
 
 
-@app.route('/master/api/v1.0/save_result/<int:x , int: y>', methods=['GET'])
-def save_result():
+@app.route('/master/save_result/<int:x>/<int:y>', methods=['GET'])
+def save_result(x,y):
     # read result from incoming json
     # save result in database
     # update rk if needed
-    return jsonify({'saved': tasks})
+    return jsonify({'savedx': x,'savedy':y})
 
 
-@app.route('/master/api/v1.0/gettasks/<int:task_id>', methods=['GET'])
-def get_tasks():
+@app.route('/master/get_tasks/<int:rk_id>', methods=['GET'])
+def get_tasks(rk_id):
     tasks = get_not_computed_tasks()
     if len(tasks) == 0:
-	return 'no tasks avaible jesonify'
+	return jsonify({'task':1})
     elif len(tasks) == 1:
-	return '1 tasks avaible jesonify'
+	return jsonify(tasks[1])
     else:
-    #decide which task to send
+    #decide which task to send---
     #update rk.append() or rk.update()
     # send jesonify task to rk 
-    return jsonify({'tasks': tasks})
+	return jsonify({'tasks': tasks})
 
 @app.errorhandler(404)
 def not_found(error):

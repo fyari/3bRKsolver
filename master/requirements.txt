@@ -1,3 +1,2 @@
-psycopg2
-sqlalchemy
-
+requests
+flask-restful
