@@ -16,5 +16,5 @@ RUN pip install -r requirements.txt
 
 
 
-EXPOSE 5090
+EXPOSE 5000
 CMD ["python", "app.py"]
