@@ -2,13 +2,20 @@ version: '3'
      
 services:
     db:
-        image: "postgres:9.6.5"
+        image: "postgres:latest"
+        restart: always
         container_name:  db_1
-        volumes: pgdata:/var/lib/postgresql/data
+        volumes: [/var/lib/postgres/]
+        #volumes: /var/lib/postgres/data
+        #volumes: /var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: postgres
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
         build: ./database
-        expose: 5432
+        expose: [5432]
         networks:
-            #public_net:
+            public_net:
                 ipv4_address:  192.168.17.3
 
     master:
@@ -18,7 +25,7 @@ services:
         depends_on:  [db]
         #expose:
         networks:
-            #public_net:
+            public_net:
                 ipv4_address:  192.168.17.4
                     
     webapp:
@@ -28,7 +35,7 @@ services:
         depends_on:  [db]
         #expose:
         networks:
-            #public_net:
+            public_net:
                 ipv4_address:  192.168.17.5
          
     rksolver1:
@@ -38,7 +45,7 @@ services:
         #depends_on:  {master}
         #expose:
         networks:
-            #public_net:
+            public_net:
                 ipv4_address:  192.168.17.6
     rksolver1:
         image: "python_rk"
@@ -47,9 +54,17 @@ services:
        # depends_on:  {master}
         #expose:
         networks:
-            #public_net:
+            public_net:
                 ipv4_address:  192.168.17.7
 
+networks:
+        public_net:
+            driver: bridge
+            ipam:
+                driver: default
+                #driver: overlay or bridge
+                config:
+                    - subnet: 192.168.17.0/24
 
-volumes:
-    pgdata:
+#volumes:
+#    pgdata:
