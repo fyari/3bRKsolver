@@ -1,7 +1,11 @@
+--use threebody;
+
 
 DROP TABLE IF EXISTS task;
 DROP TABLE IF EXISTS input;
 DROP TABLE IF EXISTS result;
+
+
 
 create table task (
      id                 serial primary key ,
