@@ -48,7 +48,7 @@ def get_not_computed_tasks():
     return [1]
 
 
-@app.route('/master/save_result/<int:x>/<int:y>', methods=['GET'])
+@app.route('/master/save_result/<float:x>/<float:y>', methods=['GET'])
 def save_result(x,y):
     # read result from incoming json
     # save result in database
