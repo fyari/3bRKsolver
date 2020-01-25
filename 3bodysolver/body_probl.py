@@ -179,8 +179,8 @@ def threeBody(M1,M2,M3):
 
     global GG; GG = (MM*G*TT**2)/(RR**3)
 
-    global Me; Me = M1/MM                    # Normalized mass of Earth
-    global Ms; Ms = M2/MM                    # Normalized mass of Sun  
+    global Me; Me = M2/MM                    # Normalized mass of Earth
+    global Ms; Ms = M1/MM                    # Normalized mass of Sun  
     global Mj; Mj = M3/MM                # Normalized mass of Jupiter/Super Jupiter
 
 
@@ -250,7 +250,7 @@ def threeBody(M1,M2,M3):
     	#AM[i+1] = AngMomentum(r[i+1,:],v[i+1,:])
     	#AreaVal[i+1] = AreaVal[i] + AreaCalc(r[i,:],r[i+1,:])
 
-    return [r[-1,0], r[-1,1], rj[-1,0], rj[-1,1]]
+    return [0,0,r[-1,0], r[-1,1], rj[-1,0], rj[-1,1]]
 
 
 #print(threeBody(2e24,2e30,2e27))
