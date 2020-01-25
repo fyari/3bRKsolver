@@ -13,7 +13,8 @@ class tasks(db.Model):
    id = db.Column('task_id', db.Integer, primary_key = True)
    taskname = db.Column(db.String(100))
    created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-   status = db.Column(ready = '0', not_ready = '1')
+   status = db.Column(db.String(50))
+      
 
 class inputs(db.Model):
    id = db.Column('input_id', db.Integer, primary_key = True)
@@ -21,7 +22,7 @@ class inputs(db.Model):
    param1 = db.Column(db.Float(20))
    param2 = db.Column(db.Float(20))
    param3 = db.Column(db.Float(20))
-   task_id= db.Column(db.Integer, db.ForeignKey('tasks.id'))
+   input_id= db.Column(db.Integer, db.ForeignKey('tasks.id'))
 
 class result(db.model):
    id = db.Column('results', db.Integer, primary_key = True)
