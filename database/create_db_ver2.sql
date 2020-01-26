@@ -16,7 +16,7 @@ create table task (
 create table io (
     id                  serial primary key ,
     task_id 	       	integer not null,
-    type                integer not null DEFAULT 0,
+    category                integer not null DEFAULT 0,
     symbol           	varchar(10) not null,
     value              	double precision ,
     
