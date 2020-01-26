@@ -16,18 +16,19 @@ create table task (
 );
 
 create table input (
-    id                     serial primary key ,
+    id                    serial primary key ,
     task_id 	       integer not null,
-    param1          double precision ,
+    symbol           varchar(10) not null,
+    value              double precision ,
     
     FOREIGN KEY (task_id) REFERENCES task (id)
   );
   
 create table result (
-     id                       serial primary key ,
-     task_id 				integer not null  ,
-     symbol                varchar(50) not null,
-    result		            double precision ,
+    id                          serial primary key ,
+    task_id 				integer not null  ,
+    symbol                varchar(10) not null,
+    value		            double precision ,
   
     FOREIGN KEY (task_id) REFERENCES task (id)
   
