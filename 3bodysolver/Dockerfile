@@ -5,8 +5,8 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir -p /opt/services/3bodysolver
 RUN mkdir -p /opt/services/3bodysolver/src
 
-COPY requirements.txt /opt/services/3bodysolver/src
-COPY 3body.py /opt/services/3bodysolver/src
+COPY . /opt/services/3bodysolver/src
+#COPY 3body.py /opt/services/3bodysolver/src
 
 WORKDIR /opt/services/3bodysolver/src
 
