@@ -17,12 +17,42 @@ api = Api(app)
 #app.config['DEBUG'] = True
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1132@127.0.0.1:5432/threebody'
 
-engine = create_engine('postgresql://postgres:postgres@localhost/threebody')
+engine = create_engine('postgresql://postgres:postgres@192.168.17.3:5432/threebody')
 try:
     con = engine.connect()
         
 except Exception:
     print("FATAL ERROR IN MASTER NODE !!! ")
+
+
+def tablesExist(tablename):
+    d = {}
+    d['tn'] = tablename
+    rs = con.execute(text("""select exists ( select 1 from information_schema.tables where table_name = :tn ) """), **d)
+    for iter in rs:
+        return iter[0]
+
+def craeteTable(tablename):
+    d = {}
+    if tablename == 'task':
+        rs = con.execute(text("""create table task (id serial primary key ,taskname varchar(50) unique not null, created timestamp not null DEFAULT CURRENT_TIMESTAMP,status integer not null DEFAULT 0, active integer not null DEFAULT 0);"""), **d)
+        print "TABLE task CREATED ...\n"
+    if tablename == 'io':
+        rs = con.execute(text("""create table io (id serial primary key ,task_id integer not null,category integer not null DEFAULT 0,symbol varchar(10) not null,value double precision ,FOREIGN KEY (task_id) REFERENCES task(id)); """), **d)
+        print "TABLE io CREATED ...\n"
+
+def checktablesExists():
+    d = {}
+
+    if not tablesExist('task'):
+        print "TABLE task DOES NOT EXISTS , ATTEMPTING TO CREATE ... "
+        craeteTable('task')
+    if not tablesExist('io'):
+        print "TABLE io DOES NOT EXISTS , ATTEMPTING TO CREATE ... "
+        craeteTable('io')
+    if tablesExist('task') and tablesExist('io'):
+        print 'TABLES task , io EXISTS ... '
+
 
 RKSOLVERS = {}
 
@@ -77,7 +107,7 @@ def saveSymbolResult(taskid , symbol , value):
     #d['id'] = getTaskID(con,taskname)
     #trans = con.begin()
     try:
-        rs = con.execute(text("""insert into io (task_id , type , symbol , value ) values (:id , 1 , :s , :v) """), **d)
+        rs = con.execute(text("""insert into io (task_id , category , symbol , value ) values (:id , 1 , :s , :v) """), **d)
         #trans.commit()
         return {'status':'OK'}
     except:
@@ -90,7 +120,7 @@ def getTaskInputs(taskname):
     d['taskname'] = taskname
     d['id'] = getTaskID(taskname)
     #print d['id']
-    rs = con.execute(text("""select symbol , value from io where task_id = :id and type = 0; """), **d)
+    rs = con.execute(text("""select symbol , value from io where task_id = :id and category = 0; """), **d)
     rss = rs.fetchall()
     # error NoneTpe object should be solved
     if rss == None:
@@ -158,5 +188,6 @@ api.add_resource(Result, '/save/<taskid>/<symbol>/<value>')
 api.add_resource(Status, '/status/<taskid>/<status>')
 
 if __name__ == '__main__':
+    checktablesExists()
     app.run(debug=True)
  
