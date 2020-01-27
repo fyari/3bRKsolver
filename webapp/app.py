@@ -23,7 +23,7 @@ class tasks(db.Model):
    name = db.Column(db.String(100))
    created = db.Column(db.DateTime, default=datetime.utcnow)
    status = db.Column(db.Integer,default = 0)
-   active = db.Column(db.Integer,default = 0)
+   active = db.Column(db.Integer,default = 1)
 
 def __init__(self,name, created,status,active):
    self.name = name
@@ -81,11 +81,13 @@ def new():
       if not request.form['name']:
          flash('Please enter all the fields', 'error')
       else:
-         task = tasks(name = request.form['name'])
-         db.session.add(task)
-         db.session.commit()
+         
+         
          ios = io(m1 = request.form['m1'],m2 = request.form['m2'],m3 = request.form['m3'],x1 = request.form['x1'],y1 = request.form['y1'],vx1 = request.form['vx1'],vy1 = request.form['vy1'],x2 = request.form['x2'],y2 = request.form['y2'],vx2 = request.form['vx2'],vy2 = request.form['vy2'],x3 = request.form['x3'],y3 = request.form['y3'],vx3 = request.form['vx3'],vy3 = request.form['vy3']  )
          db.session.add(ios)
+         db.session.commit()
+         task = tasks(name = request.form['name'])
+         db.session.add(task)
          db.session.commit()
 
          flash('Record was successfully added')
