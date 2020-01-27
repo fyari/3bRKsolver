@@ -2,9 +2,6 @@
 <html lang = "en">
    <head></head>
    <body>
-      <h3>
-         <a href = "{{ url_for('show_all') }}">Three Body RK Solver</a>
-      </h3>
       
       <hr/>
       {%- for message in get_flashed_messages() %}
@@ -25,24 +22,38 @@
       <table>
          <thead>
             <tr>
+               <th>Task_id</th>
                <th>TaskName</th>
                <th>Created</th>
+               <th>status</th>
+               <th>active</th>
              </tr>
          </thead>
          <tbody>
-            {% for task in tasks %}
+            {% for taskobj in data[1] %}
                <tr>
-                  <td>{{ task.name }}</td>
-                  <td>{{ task.created }}</td>
+                  <td>{{ taskobj.id }}</td>
+                  <td>{{ taskobj.taskname }}</td>
+                  <td>{{ taskobj.created }}</td>
+                  <td>{{ taskobj.status }}</td>
+                  <td>{{ taskobj.active }}</td>
                </tr>
             {% endfor %}
               
          </tbody> 
-       <table> 
-      <h3>TaskId and Inputs</h3>
+      </table> 
+      
+     
+
+      <h3>Inputs For Task_id</h3>
+      <label for = "task_id">task_id</label>
+      <input type = "number" name = "task_id" placeholder = "task_id" />
+      <input type = "submit" value = "Submit" /><br><br><br>
+
       <table>
          <thead>
             <tr>
+               <th>Task_id</th>
                <th>m1</th>
                <th>m2</th>
                <th>m3</th>
@@ -61,26 +72,58 @@
              </tr>
          </thead>
          <tbody>
-            {% for ios in io %}
+            
+
+            
                <tr>   
-                  <td>{{ ios.m1 }}</td> 
-                  <td>{{ ios.m2 }}</td>
-                  <td>{{ ios.m3 }}</td>
-                  <td>{{ ios.x1 }}</td> 
-                  <td>{{ ios.y1 }}</td>
-                  <td>{{ ios.vx1 }}</td>
-                  <td>{{ ios.vy1 }}</td> 
-                  <td>{{ ios.x2 }}</td>
-                  <td>{{ ios.y2 }}</td>
-                  <td>{{ ios.vx2 }}</td> 
-                  <td>{{ ios.vy2 }}</td>
-                  <td>{{ ios.x3 }}</td>
-                  <td>{{ ios.y3 }}</td> 
-                  <td>{{ ios.vx3 }}</td>
-                  <td>{{ ios.vy3}}</td>
+                  <td>{{ data[0] }}</td>
+                  {% for o in data[2] %} 
+                  <td>{{ o.value }}</td>
+                  {% endfor %}
                </tr>
-            {% endfor %}
+            
          </tbody>
       </table>
+
+
+
+
+      <h3>Results</h3>
+     
+
+      <table>
+         <thead>
+            <tr>
+               <th>Task_id</th>
+               <th>x1</th>
+               <th>y1</th>
+               <th>vx1</th>
+               <th>vy1</th>
+               <th>x2</th>
+               <th>y2</th>
+               <th>vx2</th>
+               <th>vy2</th>
+               <th>x3</th>
+               <th>y3</th>
+               <th>vx3</th>
+               <th>vy3</th>
+             </tr>
+         </thead>
+         <tbody>
+            
+
+            
+               <tr>   
+                  <td>{{ data[0] }}</td>
+                  {% for o in data[3] %} 
+                  <td>{{ o.value }}</td>
+                  {% endfor %}
+               </tr>
+            
+         </tbody>
+      </table>
+
+
+
    </body>
 </html>
