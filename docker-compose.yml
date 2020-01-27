@@ -1,4 +1,4 @@
-version: '3'
+version: "3.7"
      
 services:
     db:
@@ -34,7 +34,7 @@ services:
         image: "3body/python_flask"
         container_name:  webapp_1
         build: ./webapp
-        depends_on:  [db]
+        depends_on:  [master]
         ports: ["5000:5000"]
         #expose: [5090]
         networks:
@@ -45,7 +45,7 @@ services:
         image: "3body/python_rk"
         container_name:  rksolver1
         build: ./3bodysolver
-        #depends_on:  {master}
+        depends_on:  [master]
         ports: ["5005:5000"]
         #expose:
         networks:
@@ -55,7 +55,7 @@ services:
         image: "3body/python_rk"
         container_name:  rksolver2
         build: ./3bodysolver
-       # depends_on:  {master}
+        depends_on:  [master]
         #expose:
         networks:
             public_net:
@@ -67,8 +67,7 @@ networks:
             ipam:
                 driver: default
                 #driver: overlay or bridge
-                config:
-                    - subnet: 192.168.17.0/24
-
+                config: 
+                    - subnet: "192.168.17.0/24"                 
 #volumes:
 #    pgdata:
