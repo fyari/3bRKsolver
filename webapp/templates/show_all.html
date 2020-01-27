@@ -3,7 +3,7 @@
    <head></head>
    <body>
       <h3>
-         <a href = "{{ url_for('show_all') }}">Threebody tasks</a>
+         <a href = "{{ url_for('show_all') }}">Three Body RK Solver</a>
       </h3>
       
       <hr/>
@@ -11,35 +11,76 @@
          {{ message }}
       {%- endfor %}
 		
-      <h3>Tasks (<a href = "{{ url_for('new') }}">Add Inputs </a>)</h3>
+      <h3>Tasks (<a href = "{{ url_for('new') }}">Add Taskname </a>)</h3>
+      <style>
+      table, td, th { 
+      padding: 10px; 
+      border: 2px solid #1c87c9;
+      border-radius: 5px;
+      background-color: #e5e5e5;
+      text-align: center;
+      }
+      </style>
       
       <table>
          <thead>
             <tr>
-               <th>id</th>
-               <th>taskname</th>
-               <th>taskid</th>
-               <th>param1</th>
-               <th>param2</th>
-            </tr>
+               <th>TaskName</th>
+               <th>Created</th>
+             </tr>
          </thead>
-
-       <tbody>
+         <tbody>
             {% for task in tasks %}
                <tr>
-                  <td>{{ task.id }}</td>
-                  <td>{{ task.taskname }}</td>
+                  <td>{{ task.name }}</td>
+                  <td>{{ task.created }}</td>
                </tr>
             {% endfor %}
-            {% for input in inputs %}
-               <tr>
-                  <td>{{ input.id }}</td>
-                  <td>{{ input.taskid }}</td>
-                  <td>{{ input.param1 }}</td>
-                  <td>{{ input.param2}}</td>
+              
+         </tbody> 
+       <table> 
+      <h3>TaskId and Inputs</h3>
+      <table>
+         <thead>
+            <tr>
+               <th>m1</th>
+               <th>m2</th>
+               <th>m3</th>
+               <th>x1</th>
+               <th>y1</th>
+               <th>vx1</th>
+               <th>vy1</th>
+               <th>x2</th>
+               <th>y2</th>
+               <th>vx2</th>
+               <th>vy2</th>
+               <th>x3</th>
+               <th>y3</th>
+               <th>vx3</th>
+               <th>vy3</th>
+             </tr>
+         </thead>
+         <tbody>
+            {% for ios in io %}
+               <tr>   
+                  <td>{{ ios.m1 }}</td> 
+                  <td>{{ ios.m2 }}</td>
+                  <td>{{ ios.m3 }}</td>
+                  <td>{{ ios.x1 }}</td> 
+                  <td>{{ ios.y1 }}</td>
+                  <td>{{ ios.vx1 }}</td>
+                  <td>{{ ios.vy1 }}</td> 
+                  <td>{{ ios.x2 }}</td>
+                  <td>{{ ios.y2 }}</td>
+                  <td>{{ ios.vx2 }}</td> 
+                  <td>{{ ios.vy2 }}</td>
+                  <td>{{ ios.x3 }}</td>
+                  <td>{{ ios.y3 }}</td> 
+                  <td>{{ ios.vx3 }}</td>
+                  <td>{{ ios.vy3}}</td>
                </tr>
             {% endfor %}
-        </tbody>
+         </tbody>
       </table>
    </body>
 </html>
