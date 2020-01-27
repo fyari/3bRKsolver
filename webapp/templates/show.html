@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang = "en">
+   <head></head>
+   <body>
+      
+      <hr/>
+      {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+		
+      <h3>Tasks (<a href = "{{ url_for('new') }}">Add Taskname </a>)</h3>
+      <style>
+      table, td, th { 
+      padding: 10px; 
+      border: 2px solid #1c87c9;
+      border-radius: 5px;
+      background-color: #e5e5e5;
+      text-align: center;
+      }
+      </style>
+      
+      <table>
+         <thead>
+            <tr>
+               <th>Task_id</th>
+               <th>TaskName</th>
+               <th>Created</th>
+               <th>status</th>
+               <th>active</th>
+             </tr>
+         </thead>
+         <tbody>
+            {% for taskobj in data[0] %}
+               <tr>
+                  <td>{{ taskobj.id }}</td>
+                  <td>{{ taskobj.taskname }}</td>
+                  <td>{{ taskobj.created }}</td>
+                  <td>{{ taskobj.status }}</td>
+                  <td>{{ taskobj.active }}</td>
+               </tr>
+            {% endfor %}
+              
+         </tbody> 
+      </table> 
+      
+     
+
+      <h3>Inputs For Task_id</h3>
+      
+      <form action = "/show " method = "post"></form>
+         <label for = "task_id">task_id</label>
+         <input type = "number" name = "task_id" placeholder = "task_id" />
+      <input type = "submit" value = "Submit" /> <br><br><br>
+      </form>
+
+
+
+
+   </body>
+</html>
