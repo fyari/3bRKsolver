@@ -6,27 +6,27 @@ app = Flask(__name__)
 
 POSTGRES = {
     'user': 'postgres',
-    'pw': '1132',
+    'pw': 'postgres',
     'db': 'threebody',
     'host': '127.0.0.1',
     'port': '5432',
 }
 
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1132@127.0.0.1:5432/threebody'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@127.0.0.1:5432/threebody'
 
 
 db = SQLAlchemy(app)
 
-class tasks(db.Model): 
+class task(db.Model): 
    id = db.Column(db.Integer, primary_key = True)
-   name = db.Column(db.String(100))
+   taskname = db.Column(db.String(100))
    created = db.Column(db.DateTime, default=datetime.utcnow)
    status = db.Column(db.Integer,default = 0)
    active = db.Column(db.Integer,default = 1)
 
-def __init__(self,name, created,status,active):
-   self.name = name
+def __init__(self,taskname, created,status,active):
+   self.taskname = taskname
    self.created = created
    self.status = status
    self.active = active
@@ -35,21 +35,23 @@ class io(db.Model):
    id = db.Column(db.Integer, primary_key = True)
    task_id = db.Column(db.Integer)
    category = db.Column(db.Integer,default = 0)
-   m1 = db.Column(db.Float(50))
-   m2 = db.Column(db.Float(50))
-   m3 = db.Column(db.Float(50))
-   x1 = db.Column(db.Float(50))
-   y1 = db.Column(db.Float(50))
-   vx1 = db.Column(db.Float(50))
-   vy1 = db.Column(db.Float(50))
-   x2 = db.Column(db.Float(50))
-   y2 = db.Column(db.Float(50))
-   vx2 = db.Column(db.Float(50))
-   vy2 = db.Column(db.Float(50))
-   x3 = db.Column(db.Float(50))
-   y3 = db.Column(db.Float(50))
-   vx3 = db.Column(db.Float(50))
-   vy3 = db.Column(db.Float(50))
+   symbol = db.Column(db.String(20))
+   value  = db.Column(db.Float(20))
+   #m1 = db.Column(db.Float(50))
+   #m2 = db.Column(db.Float(50))
+   #m3 = db.Column(db.Float(50))
+   #x1 = db.Column(db.Float(50))
+   #y1 = db.Column(db.Float(50))
+   #vx1 = db.Column(db.Float(50))
+   #vy1 = db.Column(db.Float(50))
+   #x2 = db.Column(db.Float(50))
+   #y2 = db.Column(db.Float(50))
+   #vx2 = db.Column(db.Float(50))
+   #vy2 = db.Column(db.Float(50))
+   #x3 = db.Column(db.Float(50))
+   #y3 = db.Column(db.Float(50))
+   #vx3 = db.Column(db.Float(50))
+   #vy3 = db.Column(db.Float(50))
 
 
 def __init__(self, task_id, category):
@@ -73,21 +75,23 @@ def __init__(self, task_id, category):
    
 @app.route('/')
 def show_all():
-   return render_template('show_all.html', tasks = tasks.query.all(), io = io.query.all())
+   taskid = 1
+   return render_template('show_all.html', data = [taskid  , task.query.all(), io.query.filter_by(category=0).filter_by(task_id=1).all(), io.query.filter_by(category=1).filter_by(task_id=1).all() ] )
 
 @app.route('/new', methods = ['GET', 'POST'])
 def new():
    if request.method == 'POST':
-      if not request.form['name']:
+      if not request.form['taskname']:
          flash('Please enter all the fields', 'error')
       else:
          
+         #ios = io(request.form['m1'])
          
-         ios = io(m1 = request.form['m1'],m2 = request.form['m2'],m3 = request.form['m3'],x1 = request.form['x1'],y1 = request.form['y1'],vx1 = request.form['vx1'],vy1 = request.form['vy1'],x2 = request.form['x2'],y2 = request.form['y2'],vx2 = request.form['vx2'],vy2 = request.form['vy2'],x3 = request.form['x3'],y3 = request.form['y3'],vx3 = request.form['vx3'],vy3 = request.form['vy3']  )
+         #ios = io(m1 = request.form['m1'],m2 = request.form['m2'],m3 = request.form['m3'],x1 = request.form['x1'],y1 = request.form['y1'],vx1 = request.form['vx1'],vy1 = request.form['vy1'],x2 = request.form['x2'],y2 = request.form['y2'],vx2 = request.form['vx2'],vy2 = request.form['vy2'],x3 = request.form['x3'],y3 = request.form['y3'],vx3 = request.form['vx3'],vy3 = request.form['vy3']  )
          db.session.add(ios)
          db.session.commit()
-         task = tasks(name = request.form['name'])
-         db.session.add(task)
+         taskobj = task(taskname = request.form['taskname'])
+         db.session.add(taskobj)
          db.session.commit()
 
          flash('Record was successfully added')
