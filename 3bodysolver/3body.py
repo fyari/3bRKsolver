@@ -6,8 +6,8 @@ import solve_3body as solver
 
 rk_id = 1 
 
-url             = "http://127.0.0.1:5000/"
-get_task_url    = url + "task"
+url             = "http://192.168.17.4:5000/"
+get_task_url    = url + "task/"
 save_result_url = url + "save"
 register_rk_url = url + "registerrk"
 set_status_url  = url + "status"
@@ -33,41 +33,31 @@ class Task:
 		self.vy2 = vy2
 		self.vx3 = vx3
 		self.vy3 = vy3
-	def __init__(self):
-		self.id = 0
-		self.name = "taskname"
-		self.mx = 1.0
-		self.my = 1.0
-		self.mz = 1.0
-		self.x1 = 1.0
-		self.y1 = 1.0
-		self.x2 = 0.0
-		self.y2 = 0.0
-		self.x3 = 2.0
-		self.y3 = 2.0
-		self.vx1 = 0.0
-		self.vy1 = 0.0
-		self.vx2 = 0.0
-		self.vy2 = 0.0
-		self.vx3 = 0.0
-		self.vy3 = 0.0
 
 	def getAllVars(self):
 		return [self.mx, self.my, self.mz, self.x1, self.y1, self.x2, self.y2, self.x3, self.y3, self.vx1, self.vy1, self.vx2, self.vy2, self.vx3, self.vy3]
+	def __str__(self):
+		l = [self.id, self.name, self.mx, self.my, self.mz, self.x1, self.y1, self.x2, self.y2, self.x3, self.y3, self.vx1, self.vy1, self.vx2, self.vy2, self.vx3, self.vy3]
+		return str(l)
 
-	def print(self):
-		print (self.id + " " + self.name)
 
 def getTasks(rk_id):
-	while(True):
-		response = requests.get(get_task_url + str(rk_id), verify=False)
-		if response.ok:
-			print('task fetched from master')
-			break
-	tj = response.json()
-	task = Task(tj['id'], tj['taskname'], tj['m1'], tj['m2'], tj['m3'], tj['m1x'], tj['m1y'], tj['m2x'], tj['m2y'], tj['m3x'], tj['m3y'], tj['m1vx'], tj['m1vy'], tj['m2vx'], tj['m2vy'], tj['m3vx'], tj['m3vy'])
+	response = requests.get(get_task_url + str(rk_id), verify=False)
+	if response.ok:
+		#print response
+		#print response.url
+		#print response.json()
+		#print response.json()["id"]
+		tj = response.json()
+		task = Task(tj['id'], tj['taskname'], tj['m1'], tj['m2'], tj['m3'], tj['m1x'], tj['m1y'], tj['m2x'], tj['m2y'], tj['m3x'], tj['m3y'], tj['m1vx'], tj['m1vy'], tj['m2vx'], tj['m2vy'], tj['m3vx'], tj['m3vy'])
+		return task
+	if not response.ok:
+		return -1
+		#print response.url
+		
 	
-	return task
+	
+	
 
 def saveResult(task,res):
     #response = requests.get(save_result_url + str(res), verify=False)
@@ -85,7 +75,7 @@ def saveResult(task,res):
 
 def rksolver(inputs):
     #get the inputs here from master
-    results = solver.threeBody(inputs)
+    results = solver.threeBody(*inputs)
     return results
 
 def setStatus(task,status):
@@ -97,27 +87,43 @@ def setStatus(task,status):
 		if response.ok:
 			print('result ready status sent')
 			break
-def registerRKSolver():
 
-	while(True):
-		response = requests.get(register_rk_url, verify=False)
-		if response.ok:
-			print('registered rk solver')
-			break
-	rk_id_json = response.json()
-	return rk_id_jason["id"]	
+def registerRKSolver():
+	response = requests.get(register_rk_url, verify=False)
+	#print response
+	#print response.url
+	#print response.json()
+	#print response.json()["id"]
+	if not response.ok:
+		print "ERROR : registered rk solver ... "
+	if response.ok:
+		return response.json()["id"]
+
+		
 
 if __name__ == "__main__":
-
 	rk_id = registerRKSolver()
-	
-	while(True):
-		task = getTasks(rk_id)
-		# params 
-		params = []
-		res = rksolver(task.getAllVars())
-		
-		saveResult(task,res)
-		setStatus(task,2)
+	print "RKSolver Registered : " , str(rk_id)
 
+	while(True):
+
+		task = getTasks(rk_id)
+		if task == -1:
+			print "ERROR : Getting Task ... , MAYBE NO TASK AVAILABLE " 
+			time.sleep(1)
+			continue
+
+
+		print task
+
+		params = []
+		print "calculating result ...\n"
+		res = rksolver(task.getAllVars())
+		print "result : " , res
+		print "saving results ... \n"
+		saveResult(task,res)
+		print "setting task status to 2"
+		setStatus(task,2)
+		print "tired , ... sleeping ...."
 		time.sleep(1)
+	
