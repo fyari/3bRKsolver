@@ -1,7 +1,4 @@
 numpy
-scipy
-psycopg2
-sqlalchemy
 requests
 
 
