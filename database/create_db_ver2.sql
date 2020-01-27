@@ -9,7 +9,7 @@ create table task (
      id                 serial primary key ,
     taskname 	 		varchar(50) unique not null, 
     created	    		timestamp not null DEFAULT CURRENT_TIMESTAMP,
-    status            	integer not null DEFAULT 0
+    status            	integer not null DEFAULT 0,
     active              integer not null DEFAULT 0
   
 );
