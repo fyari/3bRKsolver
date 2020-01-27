@@ -102,6 +102,7 @@ def registerRKSolver():
 		
 
 if __name__ == "__main__":
+	time.sleep(15)
 	rk_id = registerRKSolver()
 	print("RKSolver Registered : " , str(rk_id))
 

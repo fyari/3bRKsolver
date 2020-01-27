@@ -1,0 +1,13 @@
+FROM postgres
+
+RUN mkdir sql
+
+COPY . sql/
+
+WORKDIR sql/
+
+EXPOSE 5432
+
+CMD psql --host localhost --port 5432 --user Postgres -c "CREATE DATABASE threebody OWNER 'Postgres';"
+
+

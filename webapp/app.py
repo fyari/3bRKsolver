@@ -1,7 +1,7 @@
 from flask import Flask, request, flash, url_for, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
+import time
 app = Flask(__name__)
 
 POSTGRES = {
@@ -100,5 +100,6 @@ def new():
 
 
 if __name__ == '__main__':
+   time.sleep(15)
    db.create_all()
    app.run(debug = True)

@@ -16,21 +16,42 @@ api = Api(app)
 
 #app.config['DEBUG'] = True
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1132@127.0.0.1:5432/threebody'
+"""
+def createdb(db = 'threebody'):
+    d = {}
+    d['db'] = db
+    rs = con.execute(text(create database :db ;), **d)
+    print "DATABASE CREATED ...\n"
+"""
+engine = create_engine('postgresql://postgres:postgres@192.168.17.3:5432/')
 
+try:
+    con = engine.connect()
+        
+except Exception:
+    print("FATAL ERROR IN MASTER NODE !!! ")
+    #engine = create_engine('postgresql://postgres:postgres@192.168.17.3:5432')
+    #con = engine.connect()
+    #createdb('threebody')
+
+    #print("FATAL ERROR IN MASTER NODE !!! ")
+#del(engine)
+"""
 engine = create_engine('postgresql://postgres:postgres@192.168.17.3:5432/threebody')
 try:
     con = engine.connect()
         
 except Exception:
     print("FATAL ERROR IN MASTER NODE !!! ")
-
-
+"""
 def tablesExist(tablename):
     d = {}
     d['tn'] = tablename
     rs = con.execute(text("""select exists ( select 1 from information_schema.tables where table_name = :tn ) """), **d)
     for iter in rs:
         return iter[0]
+
+
 
 def craeteTable(tablename):
     d = {}
@@ -188,6 +209,7 @@ api.add_resource(Result, '/save/<taskid>/<symbol>/<value>')
 api.add_resource(Status, '/status/<taskid>/<status>')
 
 if __name__ == '__main__':
+    #createdb('threebody')
     checktablesExists()
     app.run(debug=True)
  
