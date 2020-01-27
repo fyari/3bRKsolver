@@ -4,8 +4,16 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.sqlite3'
-app.config['SECRET_KEY'] = "random string"
+POSTGRES = {
+    'user': 'postgres',
+    'pw': '1132',
+    'db': 'threebody',
+    'host': '127.0.0.1',
+    'port': '5432',
+}
+
+app.config['DEBUG'] = True
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1132@127.0.0.1:5432/threebody'
 
 
 db = SQLAlchemy(app)
