@@ -1,35 +1,26 @@
---use threebody;
 
 
 DROP TABLE IF EXISTS task;
-DROP TABLE IF EXISTS input;
-DROP TABLE IF EXISTS result;
+DROP TABLE IF EXISTS io;
 
 
 
 create table task (
      id                 serial primary key ,
-    taskname 	 varchar(50) unique not null, 
-    created	    timestamp not null DEFAULT CURRENT_TIMESTAMP,
-    status           varchar(50) not null  
+    taskname 	 		varchar(50) unique not null, 
+    created	    		timestamp not null DEFAULT CURRENT_TIMESTAMP,
+    status            	integer not null DEFAULT 0,
+    active              integer not null DEFAULT 0
   
 );
 
-create table input (
-    id                    serial primary key ,
-    task_id 	       integer not null,
-    symbol           varchar(10) not null,
-    value              double precision ,
+create table io (
+    id                  serial primary key ,
+    task_id 	       	integer not null,
+    category                integer not null DEFAULT 0,
+    symbol           	varchar(10) not null,
+    value              	double precision ,
     
     FOREIGN KEY (task_id) REFERENCES task (id)
   );
   
-create table result (
-    id                          serial primary key ,
-    task_id 				integer not null  ,
-    symbol                varchar(10) not null,
-    value		            double precision ,
-  
-    FOREIGN KEY (task_id) REFERENCES task (id)
-  
-  );
