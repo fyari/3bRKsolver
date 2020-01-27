@@ -1,74 +1,37 @@
-version: '3'
-     
-services:
-    db:
-        image: "3body/postgres:latest"
-        restart: always
-        container_name:  db_1
-        volumes: [/var/lib/postgres/]
-        #volumes: /var/lib/postgres/data
-        #volumes: /var/lib/postgresql/data
-        environment:
-            POSTGRES_DB: postgres
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
-        build: ./database
-        ports: ["8000:5432"]
-        #expose: [5432]
-        networks:
-            public_net:
-                ipv4_address:  192.168.17.3
+version: '2'
 
-    master:
-        image: "3body/python_master"
-        container_name:  master_1
-        build: ./master
-        depends_on:  [db]
-        ports: ["5001:5000"]
-        #expose:
+services:
+    proxy:
+        build: ./proxy
+        networks: 
+            - front
+    app:
+        build: ./app
         networks:
-            public_net:
-                ipv4_address:  192.168.17.4
-                    
-    webapp:
-        image: "3body/python_flask"
-        container_name:  webapp_1
-        build: ./webapp
-        depends_on:  [db]
-        ports: ["5000:5000"]
-        #expose: [5090]
+            # you may set custom IP addresses
+            front:
+                ipv4_address: 172.16.238.10 
+                ipv6_address: "2001:3984:3989::10"
+            - back
+    db:
+        image: postgres
         networks:
-            public_net:
-                ipv4_address:  192.168.17.5
-         
-    rksolver1:
-        image: "3body/python_rk"
-        container_name:  rksolver1
-        build: ./3bodysolver
-        #depends_on:  {master}
-        ports: ["5005:5000"]
-        #expose:
-        networks:
-            public_net:
-                ipv4_address:  192.168.17.6
-    rksolver2:
-        image: "3body/python_rk"
-        container_name:  rksolver2
-        build: ./3bodysolver
-       # depends_on:  {master}
-        #expose:
-        networks:
-            public_net:
-                ipv4_address:  192.168.17.7
+            - back
 
 networks:
-        public_net:
-            driver: bridge
-            ipam:
-                driver: default
-                #driver: overlay or bridge
-                config:
-                    - subnet: 192.168.17.0/24
+    front:
+        # use the bridge driver, but enable IPv6
+        driver: bridge
+        driver_opts:
+            com.docker.network.enable_ipv6: "true"
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.238.0/24
+                gateway: 172.16.238.1
+                - subnet: "2001:3984:3989::/64"
+                gateway: "2001:3984:3989::1"
+    back:
+        # use a custom driver, with no options
+        driver: custom-driver-1
 
-#volumes:
-#    pgdata:
