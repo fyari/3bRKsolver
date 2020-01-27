@@ -4,7 +4,7 @@ import base64
 import time
 import solve_3body as solver
 
-rk_id = 1 
+ 
 
 url             = "http://192.168.17.4:5000/"
 get_task_url    = url + "task/"
@@ -95,7 +95,7 @@ def registerRKSolver():
 	#print response.json()
 	#print response.json()["id"]
 	if not response.ok:
-		print "ERROR : registered rk solver ... "
+		print ("ERROR : registered rk solver ... ")
 	if response.ok:
 		return response.json()["id"]
 
@@ -103,27 +103,27 @@ def registerRKSolver():
 
 if __name__ == "__main__":
 	rk_id = registerRKSolver()
-	print "RKSolver Registered : " , str(rk_id)
+	print("RKSolver Registered : " , str(rk_id))
 
 	while(True):
 
 		task = getTasks(rk_id)
 		if task == -1:
-			print "ERROR : Getting Task ... , MAYBE NO TASK AVAILABLE " 
+			print("ERROR : Getting Task ... , MAYBE NO TASK AVAILABLE " )
 			time.sleep(1)
 			continue
 
 
-		print task
+		print (task)
 
 		params = []
-		print "calculating result ...\n"
+		print ("calculating result ...\n")
 		res = rksolver(task.getAllVars())
-		print "result : " , res
-		print "saving results ... \n"
+		print ("result : " , res)
+		print ("saving results ... \n")
 		saveResult(task,res)
-		print "setting task status to 2"
+		print ("setting task status to 2")
 		setStatus(task,2)
-		print "tired , ... sleeping ...."
+		print ("tired , ... sleeping ....")
 		time.sleep(1)
 	
