@@ -1,29 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# <style>
-# @import url(https://www.numfys.net/static/css/nbstyle.css);
-# </style>
-# <a href="https://www.numfys.net"><img class="logo" /></a>
-# 
-# # Planetary Motion - Three Body Problem
-# 
-# ### Examples - Astrophysics
-# <section class="post-meta">
-# By Jonas Tjemsland, Andreas Krogen, Håkon Ånes and Jon Andreas Støvneng
-# </section>
-# Last edited: March 22nd 2018 
-# ___
-
-# This example is a continuation of [Planetary Motion](https://nbviewer.jupyter.org/urls/www.numfys.net/media/notebooks/planetary_motion.ipynb), which discussed different constant step size ordinary differential equation (ODE) solvers (such as Forward Euler, Explicit Trapezoid, Midpoint Rule and fourth order Runge-Kutta) applied on a two dimensional one body problem. In this example we will use an adaptive step size ODE solver (Embedded Runge-Kutta pair) to solve two and three body problems. A brief motivation for the adaptive step size is explained in [Adaptive Runge-Kutta Methods](https://nbviewer.jupyter.org/urls/www.numfys.net/media/notebooks/adaptive_runge_kutta_methods.ipynb).
-# 
-# ![CMoore orbit](images/CMoore1993.gif) <center>Figure-8 orbit discovered by C. Moore in 1993 [1].</center>
-# 
-# 
-# First we import the necessary libraries and set some common figure parameters.
-
-# In[1]:
-
+#This code is an edited version of an example referenced from
+#(https://nbviewer.jupyter.org/urls/www.numfys.net/media/notebooks/planetary_motion_three_body_problem.ipynb), which discussed different constant step size ordinary differential equation (ODE) solvers (such as Forward Euler, Explicit Trapezoid, Midpoint Rule and fourth order Runge-Kutta) applied on a two dimensional one body problem. In this example we will use an adaptive step size ODE solver (Embedded Runge-Kutta pair) to solve two and three body problems. A brief motivation for the adaptive step size is explained in [Adaptive Runge-Kutta Methods](https://nbviewer.jupyter.org/urls/www.numfys.net/media/notebooks/adaptive_runge_kutta_methods.ipynb).
 
 # Import libraries
 import numpy as np
