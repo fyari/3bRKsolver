@@ -164,7 +164,8 @@ class Task(Resource):
         # get new task , get inputs , (set task status = 1 , return json to rk )
         d = getNewTask()
         if d['id'] == -1 :
-            return {'status':'NOTASK'}
+            #return {'status':'NOTASK'}
+            return abort(400)
         s = getTaskInputs(d['taskname'])
         setTaskStatus(d['id'],1)
         return s
@@ -190,5 +191,5 @@ api.add_resource(Status, '/status/<taskid>/<status>')
 if __name__ == '__main__':
     time.sleep(10)
     checktablesExists()
-    app.run(debug=True)
+    app.run(host='0.0.0.0' , debug=True)
  
