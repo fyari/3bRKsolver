@@ -17,7 +17,7 @@ api = Api(app)
 #app.config['DEBUG'] = True
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1132@127.0.0.1:5432/threebody'
 
-engine = create_engine('postgresql://postgres:postgres@192.168.17.3:5432/threebody')
+engine = create_engine('postgresql://postgres:postgres@192.168.17.3:5432/')
 try:
     con = engine.connect()
         
