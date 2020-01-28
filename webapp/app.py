@@ -5,6 +5,7 @@ import time
 
 app = Flask(__name__)
 
+"""
 POSTGRES = {
     'user': 'postgres',
     'pw': 'postgres',
@@ -12,9 +13,9 @@ POSTGRES = {
     'host': '127.0.0.1',
     'port': '5432',
 }
-
+"""
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@127.0.0.1:5432/threebody'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@192.168.17.3:5432/'
 app.config['SECRET_KEY'] = 'random string'
 
 
@@ -66,7 +67,7 @@ def new():
 
          mytask = task.query.filter_by(taskname=request.form['taskname']).first()
 
-         
+         #print request.form.to_dict()
          for k, v in request.form.iteritems():
             #print k , v
             if k == "taskname":
@@ -94,4 +95,4 @@ def new():
 if __name__ == '__main__':
    time.sleep(20)
    db.create_all()
-   app.run(debug = True)
+   app.run(host='0.0.0.0' , debug = True)
