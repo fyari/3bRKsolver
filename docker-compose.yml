@@ -13,7 +13,7 @@ services:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
         build: ./database
-        #ports: ["5432:5432"]
+        ports: ["5432:5432"]
         #expose: [5432]
         networks:
             public_net:
@@ -24,7 +24,7 @@ services:
         container_name:  master_1
         build: ./master
         depends_on:  [db]
-        #ports: ["5000:5000"]
+        ports: ["5001:5000"]
         #expose:
         networks:
             public_net:
@@ -35,7 +35,7 @@ services:
         container_name:  webapp_1
         build: ./webapp
         depends_on:  [master]
-        #ports: ["5000:5000"]
+        ports: ["5000:5000"]
         #expose: [5090]
         networks:
             public_net:
