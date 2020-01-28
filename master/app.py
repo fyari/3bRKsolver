@@ -2,7 +2,7 @@ from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
 #from flask_sqlalchemy import SQLAlchemy
 #import datetime
-
+import time
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
@@ -188,6 +188,7 @@ api.add_resource(Result, '/save/<taskid>/<symbol>/<value>')
 api.add_resource(Status, '/status/<taskid>/<status>')
 
 if __name__ == '__main__':
+    time.sleep(10)
     checktablesExists()
     app.run(debug=True)
  
