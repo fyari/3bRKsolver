@@ -4,7 +4,4 @@
 TODO
 ---------
 
-traefik.toml
-
-master image
 
