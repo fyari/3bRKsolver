@@ -75,7 +75,7 @@
                <tr>   
                   <td>{{ data[0] }}</td>
                   {% for o in data[2] %} 
-                  <td>{{ o.value }}</td>
+                  <td>{{ "%.4f"|format(o.value) }}</td>
                   {% endfor %}
                </tr>
             
@@ -113,7 +113,7 @@
                <tr>   
                   <td>{{ data[0] }}</td>
                   {% for o in data[3] %} 
-                  <td>{{ o.value }}</td>
+                  <td>{{ "%.4f"|format(o.value) }}</td>
                   {% endfor %}
                </tr>
             
